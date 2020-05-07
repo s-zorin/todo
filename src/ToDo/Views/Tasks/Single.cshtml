@@ -1,0 +1,10 @@
+﻿@model ToDo.ViewModels.Tasks.Single
+
+@{ 
+    ViewData["Title"] = "View Task";
+}
+
+<h2 class="task-name">@Model.Name</h2>
+<p class="task-description">@Model.Description</p>
+<p class="task-due-date">@Model.DueDate</p>
+<div class="@(Model.IsCompleted ? "complete-mark" : "incomplete-mark")"></div>

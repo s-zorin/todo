@@ -1,5 +1,12 @@
-<html>
-    <body>
-        <h1>Test</h1>
-    </body>
-</html>
+@model ToDo.ViewModels.Tasks.Index
+
+@{
+    ViewData["Title"] = "All Tasks";
+}
+
+<ul>
+    @foreach (var task in @Model.Tasks)
+    {
+        <li><a asp-action="Single" asp-route-id="@task">@task</a></li>
+    }
+</ul>

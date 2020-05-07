@@ -28,6 +28,7 @@ namespace todo
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
             app.UseRouting();
 
             app.UseEndpoints(endpoints => endpoints.MapControllerRoute("default", "{controller=Tasks}/{action=Index}/{id?}"));

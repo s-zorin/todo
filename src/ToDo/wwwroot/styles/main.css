@@ -1,0 +1,80 @@
+﻿* {
+    --background-color: #fafafa;
+    --foreground-color: #2c2c2c;
+    --border-color: #b6b6b6;
+    --shadow-color: rgba(78, 78, 78, 0.60);
+
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: var(--background-color);
+    color: var(--foreground-color);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1.content-title {
+    font-weight: 100;
+    font-size: 4rem;
+    margin: 0;
+}
+
+div.content-container {
+
+}
+
+/* Enough space both horizontally and vertically. */
+@media not screen and (max-width: 40rem) and (max-height: 50rem) {
+    div.app-container {
+        all: unset;
+        box-sizing: border-box;
+        position: fixed;
+        overflow: hidden;
+        padding: 1rem;
+        border: 0.125rem solid var(--border-color);
+        border-radius: 1rem;
+        width: 40rem;
+        height: 50rem;
+        max-height: 100%;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 1rem var(--shadow-color);
+    }
+}
+
+/* Not enough space vertically but enough horizontally. */
+@media (max-height: 50rem) {
+    @media not screen and (max-width: 40rem) {
+        div.app-container {
+            all: unset;
+            box-sizing: border-box;
+            position: fixed;
+            overflow: hidden;
+            padding: 1rem;
+            border: solid var(--border-color);
+            border-width: 0 0.125rem;
+            width: 40rem;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%, 0);
+            box-shadow: 0 0 1rem var(--shadow-color);
+        }
+    }
+}
+
+/* Compact mode without borders and shadow. */
+@media (max-width: 40rem) {
+    div.app-container {
+        all: unset;
+        box-sizing: border-box;
+        position: fixed;
+        overflow: hidden;
+        padding: 1rem;
+        width: 100%;
+        height: 100%;
+    }
+}
