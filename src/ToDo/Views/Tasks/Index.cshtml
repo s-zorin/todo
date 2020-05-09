@@ -7,6 +7,6 @@
 <ul>
     @foreach (var task in @Model.Tasks)
     {
-        <li><a asp-action="Single" asp-route-id="@task">@task</a></li>
+        <li><a asp-action="Single" asp-route-id="@task.Id">@task.Name</a></li>
     }
 </ul>

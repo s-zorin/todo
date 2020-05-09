@@ -4,6 +4,6 @@ namespace ToDo.ViewModels.Tasks
 {
     public class Index
     {
-        public IEnumerable<string> Tasks { get; set; }
+        public IEnumerable<Models.Task> Tasks { get; set; }
     }
 }
