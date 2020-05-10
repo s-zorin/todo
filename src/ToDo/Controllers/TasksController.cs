@@ -17,9 +17,12 @@ namespace ToDo.Controllers
 
         public IActionResult Index()
         {
+            var t = context.Tasks.ToList();
+            t.AddRange(t);
+
             var viewModel = new ToDo.ViewModels.Tasks.Index
             {
-                Tasks = context.Tasks.ToList()
+                Tasks = t //context.Tasks.ToList()
             };
 
             return View(viewModel);

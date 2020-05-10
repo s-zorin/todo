@@ -3,6 +3,8 @@
     --foreground-color: #2c2c2c;
     --border-color: #b6b6b6;
     --shadow-color: rgba(78, 78, 78, 0.60);
+    --list-item-color: #9aded4;
+    --list-item-color-hover: #73d3c5;
 
     box-sizing: border-box;
 }
@@ -22,7 +24,34 @@ h1.content-title {
 }
 
 div.content-container {
+    flex-grow: 1;
+    min-height: 0;
+}
 
+ul.task-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    height: 100%;
+}
+
+li.task-item {
+    margin-bottom: 0.125rem;
+}
+
+li.task-item > a {
+    color: var(--foreground-color);
+    text-decoration: none;
+    display: block;
+    padding: 1rem;
+    background-color: var(--list-item-color);
+    transition-property: background-color;
+    transition-duration: 70ms;
+}
+
+li.task-item > a:hover {
+    background-color: var(--list-item-color-hover);
 }
 
 /* Enough space both horizontally and vertically. */
@@ -77,4 +106,9 @@ div.content-container {
         width: 100%;
         height: 100%;
     }
+}
+
+div.app-container {
+    display: flex;
+    flex-direction: column;
 }
