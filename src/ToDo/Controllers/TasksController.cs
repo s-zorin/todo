@@ -17,25 +17,29 @@ namespace ToDo.Controllers
 
         public IActionResult Index()
         {
-            var t = context.Tasks.ToList();
-            t.AddRange(t);
-
             var viewModel = new ToDo.ViewModels.Tasks.Index
             {
-                Tasks = t //context.Tasks.ToList()
+                Tasks = context.Tasks.ToList()
             };
 
             return View(viewModel);
         }
 
-        public IActionResult Single(string id)
+        public IActionResult Single(string? id)
         {
+            var task = context.Find<ToDo.Models.Task>(id);
+
+            if (task == null)
+            {
+                return NotFound("Value?");
+            }
+
             var viewModel = new ToDo.ViewModels.Tasks.Single
             {
-                Name = "Nam",
-                Description = "Desc",
-                DueDate = DateTime.Now.AddDays(1),
-                IsCompleted = false,
+                Name = task.Name,
+                Description = task.Description,
+                DueDate = task.DueDate,
+                IsCompleted = task.IsCompleted,
             };
 
             return View(viewModel);

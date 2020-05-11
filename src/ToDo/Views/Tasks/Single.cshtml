@@ -1,10 +1,24 @@
 ﻿@model ToDo.ViewModels.Tasks.Single
 
-@{ 
+@{
     ViewData["Title"] = "View Task";
+
+    string GetTaskStatusMarkClass()
+    {
+        if (Model.IsCompleted)
+        {
+            return "fas fa-check task-status-mark-completed";
+        }
+        else if (Model.DueDate < DateTimeOffset.Now)
+        {
+            return "fas fa-fire task-status-mark-overdue";
+        }
+
+        return string.Empty;
+    }
 }
 
-<h2 class="task-name">@Model.Name</h2>
+<h2 class="task-name">@Model.Name<i class="@GetTaskStatusMarkClass()"></i></h2>
+<p>Due date: <span>@Model.DueDate.ToString("g")</span></p>
 <p class="task-description">@Model.Description</p>
-<p class="task-due-date">@Model.DueDate</p>
-<div class="@(Model.IsCompleted ? "complete-mark" : "incomplete-mark")"></div>
+<a></a>

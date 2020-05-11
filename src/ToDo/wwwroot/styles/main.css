@@ -5,6 +5,8 @@
     --shadow-color: rgba(78, 78, 78, 0.60);
     --list-item-color: #9aded4;
     --list-item-color-hover: #73d3c5;
+    --task-status-mark-completed-color: #9aded4;
+    --task-status-mark-overdue-color: #e88b8b;
 
     box-sizing: border-box;
 }
@@ -111,4 +113,14 @@ li.task-item > a:hover {
 div.app-container {
     display: flex;
     flex-direction: column;
+}
+
+.task-status-mark-completed {
+    margin: 0.5rem;
+    color: var(--task-status-mark-completed-color);
+}
+
+.task-status-mark-overdue {
+    margin: 0.5rem;
+    color: var(--task-status-mark-overdue-color);
 }
