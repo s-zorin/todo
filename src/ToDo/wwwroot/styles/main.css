@@ -5,8 +5,8 @@
     --shadow-color: rgba(78, 78, 78, 0.60);
     --list-item-color: #9aded4;
     --list-item-color-hover: #73d3c5;
-    --task-status-mark-completed-color: #9aded4;
-    --task-status-mark-overdue-color: #e88b8b;
+    --icon-color: #9aded4;
+    --icon-destructive-color: #e88b8b;
 
     box-sizing: border-box;
 }
@@ -117,10 +117,63 @@ div.app-container {
 
 .task-status-mark-completed {
     margin: 0.5rem;
-    color: var(--task-status-mark-completed-color);
+    color: var(--icon-color);
 }
 
 .task-status-mark-overdue {
     margin: 0.5rem;
-    color: var(--task-status-mark-overdue-color);
+    color: var(--icon-destructive-color);
+}
+
+a.hyperlink-button, a.hyperlink-button-destructive {
+    color: var(--foreground-color);
+    text-decoration: underline dotted;
+    display: inline-block;
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+a.hyperlink-button > i, a.hyperlink-button-destructive > i {
+    margin-right: 0.5rem;
+    color: var(--foreground-color);
+    transition-property: color;
+    transition-duration: 140ms;
+}
+
+a.hyperlink-button:hover > i {
+    color: var(--icon-color);
+}
+
+a.hyperlink-button-destructive:hover > i {
+    color: var(--icon-destructive-color);
+}
+
+div.actions-container {
+    text-align: center;
+    margin: auto;
+}
+
+div.actions-container a {
+    color: var(--foreground-color);
+    text-decoration: underline dotted;
+    display: inline-block;
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+div.actions-container a > i {
+    margin-right: 0.5rem;
+    color: var(--foreground-color);
+    transition-property: color;
+    transition-duration: 140ms;
+}
+
+div.actions-container a:hover > i {
+    color: var(--icon-color);
+}
+
+div.actions-container a.destructive:hover > i {
+    color: var(--icon-destructive-color);
 }

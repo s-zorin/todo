@@ -2,8 +2,16 @@
 
 @{
     ViewData["Title"] = "View Task";
+    ViewData["Id"] = Model.Id;
+    ViewData["Actions"] = new[]
+    {
+        (HtmlTemplate)(@<a class="normal" asp-action="Complete" asp-route-id="@ViewData["Id"]"><i class="fas fa-check"></i>Complete</a>),
+        (HtmlTemplate)(@<a class="normal" asp-action="ToDo" asp-route-id="@ViewData["Id"]"><i class="fas fa-calendar"></i>ToDo</a>),
+        (HtmlTemplate)(@<a class="normal" asp-action="Edit" asp-route-id="@ViewData["Id"]"><i class="fas fa-edit"></i>Edit</a>),
+        (HtmlTemplate)(@<a class="destructive" asp-action="Delete" asp-route-id="@ViewData["Id"]"><i class="fas fa-times"></i>Delete</a>),
+    };
 
-    string GetTaskStatusMarkClass()
+    string SelectClass()
     {
         if (Model.IsCompleted)
         {
@@ -18,7 +26,6 @@
     }
 }
 
-<h2 class="task-name">@Model.Name<i class="@GetTaskStatusMarkClass()"></i></h2>
+<h2 class="task-name">@Model.Name<i class="@SelectClass()"></i></h2>
 <p>Due date: <span>@Model.DueDate.ToString("g")</span></p>
 <p class="task-description">@Model.Description</p>
-<a></a>

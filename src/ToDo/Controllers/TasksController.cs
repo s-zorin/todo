@@ -1,12 +1,10 @@
-using System;
-using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using ToDo.Data;
 
 namespace ToDo.Controllers
 {
-    public class TasksController : Controller
+    public sealed class TasksController : Controller
     {
         private readonly ToDoDbContext context;
 
@@ -36,6 +34,7 @@ namespace ToDo.Controllers
 
             var viewModel = new ToDo.ViewModels.Tasks.Single
             {
+                Id = task.Id,
                 Name = task.Name,
                 Description = task.Description,
                 DueDate = task.DueDate,

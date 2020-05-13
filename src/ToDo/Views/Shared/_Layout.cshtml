@@ -1,3 +1,20 @@
+@using Microsoft.AspNetCore.Html
+
+@{
+    IHtmlContent RenderActions()
+    {
+        var actions = ViewData["Actions"] as IEnumerable<HtmlTemplate> ?? Enumerable.Empty<HtmlTemplate>();
+        var builder = new HtmlContentBuilder();
+
+        foreach (var action in actions)
+        {
+            builder.AppendHtml(action(null));
+        }
+
+        return builder;
+    }
+}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,12 +23,15 @@
     <link rel="stylesheet" type="text/css" href="~/styles/main.css" />
     <link rel="stylesheet" type="text/css" href="~/fontawesome-free-5.13.0-web/css/all.css">
 </head>
-    <body>
-        <div class="app-container">
-            <h1 class="content-title">@ViewData["Title"]</h1>
-            <div class="content-container">
-                @RenderBody()
-            </div>
+<body>
+    <div class="app-container">
+        <h1 class="content-title">@ViewData["Title"]</h1>
+        <div class="content-container">
+            @RenderBody()
         </div>
-    </body>
+        <div class="actions-container">
+            @RenderActions()
+        </div>
+    </div>
+</body>
 </html>
