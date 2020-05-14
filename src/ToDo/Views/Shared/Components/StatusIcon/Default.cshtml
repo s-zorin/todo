@@ -3,10 +3,10 @@
 @{ 
     if (Model.IsCompleted)
     {
-        <i class="fas fa-check task-status-mark-completed"></i>
+        <i class="fas fa-check status-mark-completed"></i>
     }
     else if (Model.DueDate < DateTimeOffset.Now)
     {
-        <i class="fas fa-fire task-status-mark-overdue"></i>
+        <i class="fas fa-fire status-mark-overdue"></i>
     }
 }
