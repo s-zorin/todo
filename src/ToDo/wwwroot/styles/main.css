@@ -115,12 +115,12 @@ div.app-container {
     flex-direction: column;
 }
 
-.task-status-mark-completed {
+.status-mark-completed {
     margin: 0.5rem;
     color: var(--icon-color);
 }
 
-.task-status-mark-overdue {
+.status-mark-overdue {
     margin: 0.5rem;
     color: var(--icon-destructive-color);
 }

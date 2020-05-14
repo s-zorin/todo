@@ -1,31 +1,25 @@
-﻿@model ToDo.ViewModels.Tasks.Single
+﻿@using Microsoft.AspNetCore.Html
+
+@model ToDo.ViewModels.Tasks.Single
 
 @{
+    var id = Model.Id;
+
     ViewData["Title"] = "View Task";
-    ViewData["Id"] = Model.Id;
     ViewData["Actions"] = new[]
     {
-        (HtmlTemplate)(@<a class="normal" asp-action="Complete" asp-route-id="@ViewData["Id"]"><i class="fas fa-check"></i>Complete</a>),
-        (HtmlTemplate)(@<a class="normal" asp-action="ToDo" asp-route-id="@ViewData["Id"]"><i class="fas fa-calendar"></i>ToDo</a>),
-        (HtmlTemplate)(@<a class="normal" asp-action="Edit" asp-route-id="@ViewData["Id"]"><i class="fas fa-edit"></i>Edit</a>),
-        (HtmlTemplate)(@<a class="destructive" asp-action="Delete" asp-route-id="@ViewData["Id"]"><i class="fas fa-times"></i>Delete</a>),
+        (HtmlTemplate)(@<a class="normal" asp-action="Complete" asp-route-id="@id"><i class="fas fa-check"></i>Complete</a>),
+        (HtmlTemplate)(@<a class="normal" asp-action="ToDo" asp-route-id="@id"><i class="fas fa-calendar"></i>ToDo</a>),
+        (HtmlTemplate)(@<a class="normal" asp-action="Edit" asp-route-id="@id"><i class="fas fa-edit"></i>Edit</a>),
+        (HtmlTemplate)(@<a class="destructive" asp-action="Delete" asp-route-id="@id"><i class="fas fa-times"></i>Delete</a>),
     };
 
-    string SelectClass()
+    async Task<IHtmlContent> RenderStatusIconAsync()
     {
-        if (Model.IsCompleted)
-        {
-            return "fas fa-check task-status-mark-completed";
-        }
-        else if (Model.DueDate < DateTimeOffset.Now)
-        {
-            return "fas fa-fire task-status-mark-overdue";
-        }
-
-        return string.Empty;
+        return await Component.InvokeAsync("StatusIcon", new { DueDate = Model.DueDate, IsCompleted = Model.IsCompleted });
     }
 }
 
-<h2 class="task-name">@Model.Name<i class="@SelectClass()"></i></h2>
+<h2 class="task-name">@Model.Name@await RenderStatusIconAsync()</h2>
 <p>Due date: <span>@Model.DueDate.ToString("g")</span></p>
 <p class="task-description">@Model.Description</p>

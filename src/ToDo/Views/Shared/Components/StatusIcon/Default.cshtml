@@ -1,0 +1,12 @@
+﻿@model ToDo.Views.Shared.Components.StatusIcon.StatusIconViewComponentModel
+
+@{ 
+    if (Model.IsCompleted)
+    {
+        <i class="fas fa-check task-status-mark-completed"></i>
+    }
+    else if (Model.DueDate < DateTimeOffset.Now)
+    {
+        <i class="fas fa-fire task-status-mark-overdue"></i>
+    }
+}
