@@ -13,6 +13,18 @@
 
         return builder;
     }
+
+    IHtmlContent RenderHomeButton()
+    {
+        var action = ViewContext.RouteData.Values["action"] as string;
+
+        if (action != "Index")
+        {
+            return ((HtmlTemplate)(@<a title="Back to all tasks" asp-action="Index"><i class="fas fa-arrow-left"></i></a>))(null);
+        }
+
+        return new HtmlString("");
+    }
 }
 
 <!DOCTYPE html>
@@ -25,7 +37,12 @@
 </head>
 <body>
     <div class="app-container">
-        <h1 class="content-title">@ViewData["Title"]</h1>
+        <div class="title-container">
+            <div class="home-button-container">
+                @RenderHomeButton()
+            </div>
+            <h1 class="content-title">@ViewData["Title"]</h1>
+        </div>
         <div class="content-container">
             @RenderBody()
         </div>

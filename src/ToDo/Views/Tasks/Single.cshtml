@@ -3,23 +3,32 @@
 @model ToDo.ViewModels.Tasks.Single
 
 @{
-    var id = Model.Task.Id;
-
     ViewData["Title"] = "View Task";
-    ViewData["Actions"] = new[]
-    {
-        (HtmlTemplate)(@<a class="normal" asp-action="Complete" asp-route-id="@id"><i class="fas fa-check"></i>Complete</a>),
-        (HtmlTemplate)(@<a class="normal" asp-action="ToDo" asp-route-id="@id"><i class="fas fa-calendar"></i>ToDo</a>),
-        (HtmlTemplate)(@<a class="normal" asp-action="Edit" asp-route-id="@id"><i class="fas fa-edit"></i>Edit</a>),
-        (HtmlTemplate)(@<a class="destructive" asp-action="Delete" asp-route-id="@id"><i class="fas fa-times"></i>Delete</a>),
-    };
+    ViewData["Actions"] = GetActions();
 
     async Task<IHtmlContent> RenderStatusIconAsync()
     {
         return await Component.InvokeAsync("StatusIcon", new { DueDate = Model.Task.DueDate, IsCompleted = Model.Task.IsCompleted });
     }
+
+    IEnumerable<HtmlTemplate> GetActions()
+    {
+        var id = Model.Task.Id;
+
+        if (Model.Task.IsCompleted)
+        {
+            yield return (HtmlTemplate)(@<a class="normal" asp-action="ToDo" asp-route-id="@id"><i class="fas fa-calendar"></i>ToDo</a>);
+        }
+        else
+        {
+            yield return (HtmlTemplate)(@<a class="normal" asp-action="Complete" asp-route-id="@id"><i class="fas fa-check"></i>Complete</a>);
+        }
+
+        yield return (HtmlTemplate)(@<a class="normal" asp-action="Edit" asp-route-id="@id"><i class="fas fa-edit"></i>Edit</a>);
+        yield return (HtmlTemplate)(@<a class="destructive" asp-action="Delete" asp-route-id="@id"><i class="fas fa-times"></i>Delete</a>);
+    }
 }
 
 <h2 class="task-name">@Model.Task.Name@await RenderStatusIconAsync()</h2>
-<p>Due date: <span>@Model.Task.DueDate.ToString("g")</span></p>
+<p>Due date: <span>@Model.Task.DueDate.ToString("d")</span></p>
 <p class="task-description">@Model.Task.Description</p>

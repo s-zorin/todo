@@ -18,7 +18,7 @@ namespace ToDo.Controllers
         {
             var viewModel = new ToDo.ViewModels.Tasks.Index
             {
-                Tasks = context.Tasks.ToList()
+                Tasks = context.Tasks.ToList(),
             };
 
             return View(viewModel);
@@ -87,21 +87,59 @@ namespace ToDo.Controllers
 
             if (task == null)
             {
-                return RedirectToAction("Index", "Tasks");
-            }
+                task = new ToDo.Models.Task
+                {
+                    Id = id ?? Guid.NewGuid().ToString(),
+                    Name = submittedTask.Name,
+                    Description = submittedTask.Description,
+                    DueDate = submittedTask.DueDate,
+                };
 
-            task.Name = submittedTask.Name;
-            task.Description = submittedTask.Description;
-            task.DueDate = submittedTask.DueDate;
+                context.Add(task);
+            }
+            else
+            {
+                task.Name = submittedTask.Name;
+                task.Description = submittedTask.Description;
+                task.DueDate = submittedTask.DueDate;
+            }
 
             context.SaveChanges();
 
-            var viewModel = new ToDo.ViewModels.Tasks.Single
+            return RedirectToAction("Single", "Tasks", new { task.Id });
+        }
+
+        public IActionResult Create()
+        {
+            var task = new ToDo.Models.Task
             {
-                Task = task
+                Name = "New Task",
+                Description = null,
+                DueDate = DateTimeOffset.Now.Date,
             };
 
-            return View("Single", viewModel);
+            var viewModel = new ToDo.ViewModels.Tasks.Edit
+            {
+                Task = task,
+            };
+
+            return View("Edit", viewModel);
+        }
+
+        public IActionResult ToDo(string? id)
+        {
+            var task = context.Find<ToDo.Models.Task>(id);
+
+            if (task == null)
+            {
+                return NotFound("Task not found");
+            }
+
+            task.IsCompleted = false;
+
+            context.SaveChanges();
+
+            return RedirectToAction("Edit", "Tasks", new { task.Id });
         }
     }
 }
