@@ -35,11 +35,7 @@ namespace ToDo.Controllers
 
             var viewModel = new ToDo.ViewModels.Tasks.Single
             {
-                Id = task.Id,
-                Name = task.Name,
-                Description = task.Description,
-                DueDate = task.DueDate,
-                IsCompleted = task.IsCompleted,
+                Task = task,
             };
 
             return View(viewModel);
@@ -65,6 +61,47 @@ namespace ToDo.Controllers
             }
 
             return RedirectToAction("Index", "Tasks");
+        }
+
+        public IActionResult Edit(string? id)
+        {
+            var task = context.Find<ToDo.Models.Task>(id);
+
+            if (task == null)
+            {
+                return NotFound("Task not found.");
+            }
+
+            var viewModel = new ToDo.ViewModels.Tasks.Edit
+            {
+                Task = task,
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult SubmitEdits(string? id, [Bind("Name", "Description", "DueDate", Prefix = "Task")] Models.Task submittedTask)
+        {
+            var task = context.Find<ToDo.Models.Task>(id);
+
+            if (task == null)
+            {
+                return RedirectToAction("Index", "Tasks");
+            }
+
+            task.Name = submittedTask.Name;
+            task.Description = submittedTask.Description;
+            task.DueDate = submittedTask.DueDate;
+
+            context.SaveChanges();
+
+            var viewModel = new ToDo.ViewModels.Tasks.Single
+            {
+                Task = task
+            };
+
+            return View("Single", viewModel);
         }
     }
 }

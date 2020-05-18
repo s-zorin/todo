@@ -3,7 +3,7 @@
 @model ToDo.ViewModels.Tasks.Single
 
 @{
-    var id = Model.Id;
+    var id = Model.Task.Id;
 
     ViewData["Title"] = "View Task";
     ViewData["Actions"] = new[]
@@ -16,10 +16,10 @@
 
     async Task<IHtmlContent> RenderStatusIconAsync()
     {
-        return await Component.InvokeAsync("StatusIcon", new { DueDate = Model.DueDate, IsCompleted = Model.IsCompleted });
+        return await Component.InvokeAsync("StatusIcon", new { DueDate = Model.Task.DueDate, IsCompleted = Model.Task.IsCompleted });
     }
 }
 
-<h2 class="task-name">@Model.Name@await RenderStatusIconAsync()</h2>
-<p>Due date: <span>@Model.DueDate.ToString("g")</span></p>
-<p class="task-description">@Model.Description</p>
+<h2 class="task-name">@Model.Task.Name@await RenderStatusIconAsync()</h2>
+<p>Due date: <span>@Model.Task.DueDate.ToString("g")</span></p>
+<p class="task-description">@Model.Task.Description</p>

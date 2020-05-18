@@ -1,5 +1,5 @@
 ﻿* {
-    --background-color: #fafafa;
+    --background-color: #efefef;
     --foreground-color: #2c2c2c;
     --border-color: #b6b6b6;
     --shadow-color: rgba(78, 78, 78, 0.60);
@@ -13,8 +13,7 @@
 
 body {
     margin: 0;
-    overflow: hidden;
-    background-color: var(--background-color);
+    overflow: hidden;  
     color: var(--foreground-color);
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -113,6 +112,7 @@ li.task-item > a:hover {
 div.app-container {
     display: flex;
     flex-direction: column;
+    background-color: var(--background-color);
 }
 
 .status-mark-completed {
@@ -154,26 +154,90 @@ div.actions-container {
     margin: auto;
 }
 
-div.actions-container a {
+div.actions-container a, div.actions-container button {
     color: var(--foreground-color);
-    text-decoration: underline dotted;
+    text-decoration: none;
     display: inline-block;
     padding: 1rem;
     font-size: 1.2rem;
     font-weight: 700;
 }
 
-div.actions-container a > i {
+div.actions-container button {
+    cursor: pointer;
+    font-family: inherit;
+    background-color: transparent;
+    border-width: 0;
+}
+
+div.actions-container a > i, div.actions-container button > i {
     margin-right: 0.5rem;
     color: var(--foreground-color);
     transition-property: color;
     transition-duration: 140ms;
 }
 
-div.actions-container a:hover > i {
+div.actions-container a:hover > i, div.actions-container button:hover > i {
     color: var(--icon-color);
 }
 
-div.actions-container a.destructive:hover > i {
+div.actions-container a.destructive:hover > i, div.actions-container button.destructive > i {
     color: var(--icon-destructive-color);
+}
+
+/* Firefox: Make button's focus outline look the same as focus outline on a link. */
+@supports (-moz-appearance:none) {
+    div.actions-container button::-moz-focus-inner {
+        border: none;
+        padding: 0;
+    }
+
+    div.actions-container button:focus {
+        outline-style: dotted;
+        outline-width: 1px;
+    }
+}
+
+form {
+
+}
+
+form input {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+}
+
+form label {
+    display: block;
+    padding: 0.5rem;
+    font-weight: 700;
+    font-size: 0.75rem;
+}
+
+form input[type=text] {
+    padding: 0.5rem;
+    border: 0.125rem solid var(--border-color);
+    width: 100%;
+}
+
+form input[type=date] {
+    padding: 0.5rem;
+    border: 0.125rem solid var(--border-color);
+    width: 100%;
+}
+
+form textarea {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    padding: 0.5rem;
+    border: 0.125rem solid var(--border-color);
+    height: 5rem;
+    width: 100%;
+    resize: vertical;
+}
+
+form div.group {
+    padding: 0.5rem;
 }

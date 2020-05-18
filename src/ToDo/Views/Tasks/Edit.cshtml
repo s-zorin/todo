@@ -1,0 +1,24 @@
+﻿@model ToDo.ViewModels.Tasks.Edit
+
+@{
+    ViewData["Title"] = "Edit Task";
+    ViewData["Actions"] = new[]
+    {
+        (HtmlTemplate)(@<button type="submit" form="task-edit-form"><i class="fas fa-calendar-plus"></i>Save</button>),
+    };
+}
+
+<form id="task-edit-form" asp-action="SubmitEdits" asp-route-id="@Model.Task.Id" method="post">
+    <div class="group">
+        <label>Name</label>
+        <input asp-for="Task.Name" type="text" />
+    </div>
+    <div class="group">
+        <label>Description</label>
+        <textarea asp-for="Task.Description"></textarea>
+    </div>
+    <div class="group">
+        <label>Due date</label>
+        <input asp-for="Task.DueDate" type="date" />
+    </div>
+</form>

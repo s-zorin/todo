@@ -1,8 +1,7 @@
-﻿using System;
-
+﻿
 namespace ToDo.ViewModels.Tasks
 {
-    public sealed class Single
+    public class Edit
     {
         public Models.Task Task { get; set; } = null!;
     }
