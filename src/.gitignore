@@ -32,6 +32,10 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
+dest/
 
 # Visual Studio
 .vs/
+
+# Node
+node_modules/
