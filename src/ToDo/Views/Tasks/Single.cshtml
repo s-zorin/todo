@@ -4,29 +4,11 @@
 
 @{
     ViewData["Title"] = "View Task";
-    ViewData["Actions"] = GetActions();
 
     async Task<IHtmlContent> RenderStatusIconAsync()
     {
         return await Component.InvokeAsync("StatusIcon", new { DueDate = Model.Task.DueDate, IsCompleted = Model.Task.IsCompleted });
     }
-
-    IEnumerable<HtmlTemplate> GetActions()
-    {
-        var id = Model.Task.Id;
-
-        if (Model.Task.IsCompleted)
-        {
-            yield return (HtmlTemplate)(@<a class="normal" asp-action="ToDo" asp-route-id="@id"><i class="fas fa-calendar"></i>ToDo</a>);
-}
-else
-{
-yield return (HtmlTemplate)(@<a class="normal" asp-action="Complete" asp-route-id="@id"><i class="fas fa-check"></i>Complete</a>);
-}
-
-yield return (HtmlTemplate)(@<a class="normal" asp-action="Edit" asp-route-id="@id"><i class="fas fa-edit"></i>Edit</a>);
-yield return (HtmlTemplate)(@<a class="destructive" asp-action="Delete" asp-route-id="@id"><i class="fas fa-times"></i>Delete</a>);
-}
 }
 
 @section Actions {
