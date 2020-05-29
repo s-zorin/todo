@@ -2,10 +2,10 @@
 
 @{
     ViewData["Title"] = "Edit Task";
-    ViewData["Actions"] = new[]
-    {
-        (HtmlTemplate)(@<button type="submit" form="task-edit-form"><i class="fas fa-clipboard-check"></i>Save</button>),
-    };
+}
+
+@section Actions {
+    <button type="submit" form="task-edit-form"><i class="fas fa-clipboard-check"></i>Save</button>
 }
 
 <form id="task-edit-form" asp-action="SubmitEdits" asp-route-id="@Model.Task.Id" method="post">

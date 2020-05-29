@@ -2,10 +2,14 @@
 
 @{
     ViewData["Title"] = "All Tasks";
-    ViewData["Actions"] = new[]
-    {
-        (HtmlTemplate)(@<a asp-action="Create"><i class="fas fa-plus"></i>New</a>),
-    };
+}
+
+@section Scripts {
+    <script src="~/scripts/script.js"></script>
+}
+
+@section Actions {
+    <a asp-action="Create"><i class="fas fa-plus"></i>New</a>
 }
 
 <ul class="task-list">

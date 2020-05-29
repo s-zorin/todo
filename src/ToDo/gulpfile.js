@@ -14,18 +14,28 @@ var paths = {
     modules: "./node_modules/"
 };
 
-paths.dest = paths.webroot + "dest/";
-paths.src = paths.webroot + "src/";
+paths.dest = paths.webroot;
+paths.dest_css = paths.dest + "css/";
+paths.dest_scripts = paths.dest + "scripts/";
+
+paths.src = "./";
+paths.src_css = `${paths.src}css/**/*.css`;
+paths.src_scripts = [`${paths.src}scripts/**/*.ts`, `${paths.src}scripts/**/*.js`, `${paths.src}scripts/**/*.map`];
 
 function css() {
-    return src(`${paths.src}**/*.css`)
+    return src(paths.src_css)
         .pipe(cssmin())
         .pipe(rename(function (path) {
             path.extname = ".min.css";
         }))
-        .pipe(dest(paths.dest))
-        .pipe(src(`${paths.src}**/*.css`))
-        .pipe(dest(paths.dest));
+        .pipe(dest(paths.dest_css))
+        .pipe(src(paths.src_css))
+        .pipe(dest(paths.dest_css));
+}
+
+function scripts() {
+    return src(paths.src_scripts)
+        .pipe(dest(paths.dest_scripts));
 }
 
 function modules(done) {
@@ -46,9 +56,10 @@ function modules(done) {
     return parallel(font_awesome)(done);
 }
 
-function clean() {
-    return del(paths.dest);
+function clean(done) {
+    del.sync([`${paths.dest}**`, `!${paths.dest}`]);
+    done();
 }
 
-exports.build = parallel(css, modules);
+exports.build = parallel(css, scripts, modules);
 exports.clean = clean;

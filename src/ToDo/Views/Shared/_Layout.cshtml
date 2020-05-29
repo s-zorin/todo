@@ -1,19 +1,6 @@
 @using Microsoft.AspNetCore.Html
 
 @{
-    IHtmlContent RenderActions()
-    {
-        var actions = ViewData["Actions"] as IEnumerable<HtmlTemplate> ?? Enumerable.Empty<HtmlTemplate>();
-        var builder = new HtmlContentBuilder();
-
-        foreach (var action in actions)
-        {
-            builder.AppendHtml(action(null));
-        }
-
-        return builder;
-    }
-
     IHtmlContent RenderHomeButton()
     {
         var action = ViewContext.RouteData.Values["action"] as string;
@@ -34,13 +21,13 @@
     <title>@ViewData["Title"]</title>
 
     <environment include="Development">
-        <link rel="stylesheet" type="text/css" href="~/dest/css/main.css" />
-        <link rel="stylesheet" type="text/css" href="~/dest/font-awesome/css/all.css">
+        <link rel="stylesheet" type="text/css" href="~/css/main.css" />
+        <link rel="stylesheet" type="text/css" href="~/font-awesome/css/all.css">
     </environment>
 
     <environment include="Production">
-        <link rel="stylesheet" type="text/css" href="~/dest/css/main.min.css" />
-        <link rel="stylesheet" type="text/css" href="~/dest/font-awesome/css/all.min.css">
+        <link rel="stylesheet" type="text/css" href="~/css/main.min.css" />
+        <link rel="stylesheet" type="text/css" href="~/font-awesome/css/all.min.css">
     </environment>
 </head>
 <body>
@@ -55,8 +42,9 @@
             @RenderBody()
         </div>
         <div class="actions-container">
-            @RenderActions()
+            @RenderSection("Actions", required: false)
         </div>
     </div>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

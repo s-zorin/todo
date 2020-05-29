@@ -18,15 +18,29 @@
         if (Model.Task.IsCompleted)
         {
             yield return (HtmlTemplate)(@<a class="normal" asp-action="ToDo" asp-route-id="@id"><i class="fas fa-calendar"></i>ToDo</a>);
-        }
-        else
-        {
-            yield return (HtmlTemplate)(@<a class="normal" asp-action="Complete" asp-route-id="@id"><i class="fas fa-check"></i>Complete</a>);
-        }
+}
+else
+{
+yield return (HtmlTemplate)(@<a class="normal" asp-action="Complete" asp-route-id="@id"><i class="fas fa-check"></i>Complete</a>);
+}
 
-        yield return (HtmlTemplate)(@<a class="normal" asp-action="Edit" asp-route-id="@id"><i class="fas fa-edit"></i>Edit</a>);
-        yield return (HtmlTemplate)(@<a class="destructive" asp-action="Delete" asp-route-id="@id"><i class="fas fa-times"></i>Delete</a>);
+yield return (HtmlTemplate)(@<a class="normal" asp-action="Edit" asp-route-id="@id"><i class="fas fa-edit"></i>Edit</a>);
+yield return (HtmlTemplate)(@<a class="destructive" asp-action="Delete" asp-route-id="@id"><i class="fas fa-times"></i>Delete</a>);
+}
+}
+
+@section Actions {
+    @if (Model.Task.IsCompleted)
+    {
+        <a class="normal" asp-action="ToDo" asp-route-id="@Model.Task.Id"><i class="fas fa-calendar"></i>ToDo</a>
     }
+    else
+    {
+        <a class="normal" asp-action="Complete" asp-route-id="@Model.Task.Id"><i class="fas fa-check"></i>Complete</a>
+    }
+
+    <a class="normal" asp-action="Edit" asp-route-id="@Model.Task.Id"><i class="fas fa-edit"></i>Edit</a>
+    <a class="destructive" asp-action="Delete" asp-route-id="@Model.Task.Id"><i class="fas fa-times"></i>Delete</a>
 }
 
 <h2 class="task-name">@Model.Task.Name@await RenderStatusIconAsync()</h2>
