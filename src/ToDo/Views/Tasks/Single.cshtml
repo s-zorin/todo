@@ -20,9 +20,27 @@
     {
         <a class="normal" asp-action="Complete" asp-route-id="@Model.Task.Id"><i class="fas fa-check"></i>Complete</a>
     }
-
     <a class="normal" asp-action="Edit" asp-route-id="@Model.Task.Id"><i class="fas fa-edit"></i>Edit</a>
-    <a class="destructive" asp-action="Delete" asp-route-id="@Model.Task.Id"><i class="fas fa-times"></i>Delete</a>
+    <button id="delete-button" class="destructive"><i class="fas fa-times"></i>Delete</button>
+}
+
+@section Scripts {
+    <script src="~/scripts/Views/Tasks/single.js"></script>
+}
+
+@section Overlay {
+    <div id="delete-confirmation-modal" class="modal">
+        <div>
+            <h1>Delete task</h1>
+            <p>Please confirm task deletion.</p>
+            <div class="actions-container">
+                <button class="destructive" type="submit" form="task-delete-form"><i class="fas fa-times"></i>Delete</button>
+                <button id="modal-cancel-button"><i class="fas fa-share"></i>Cancel</button>
+            </div>
+            <form id="task-delete-form" asp-action="SubmitDelete" asp-route-id="@Model.Task.Id" method="post">
+            </form>
+        </div>
+    </div>
 }
 
 <h2 class="task-name">@Model.Task.Name@await RenderStatusIconAsync()</h2>

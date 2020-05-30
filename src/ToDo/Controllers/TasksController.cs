@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 using ToDo.Data;
 
@@ -140,6 +141,22 @@ namespace ToDo.Controllers
             context.SaveChanges();
 
             return RedirectToAction("Edit", "Tasks", new { task.Id });
+        }
+
+        [HttpPost]
+        public IActionResult SubmitDelete(string? id)
+        {
+            var task = context.Find<ToDo.Models.Task>(id);
+
+            if (task == null)
+            {
+                return NotFound("Task not found");
+            }
+
+            context.Tasks.Remove(task);
+            context.SaveChanges();
+
+            return RedirectToAction("Index", "Tasks");
         }
     }
 }

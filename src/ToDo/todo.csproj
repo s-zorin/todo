@@ -17,8 +17,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <Compile Remove="wwwroot\scripts\**" />
+    <Content Remove="wwwroot\scripts\**" />
+    <EmbeddedResource Remove="wwwroot\scripts\**" />
+    <None Remove="wwwroot\scripts\**" />
     <TypeScriptCompile Remove="node_modules\**" />
+    <TypeScriptCompile Remove="wwwroot\scripts\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

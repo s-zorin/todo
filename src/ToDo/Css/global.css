@@ -1,0 +1,11 @@
+﻿* {
+    --background-color: #efefef;
+    --foreground-color: #2c2c2c;
+    --border-color: #b6b6b6;
+    --shadow-color: rgba(78, 78, 78, 0.60);
+    --list-item-color: #9aded4;
+    --list-item-color-hover: #73d3c5;
+    --icon-color: #9aded4;
+    --icon-destructive-color: #e88b8b;
+    box-sizing: border-box;
+}

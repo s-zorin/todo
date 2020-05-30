@@ -15,8 +15,8 @@ var paths = {
 };
 
 paths.dest = paths.webroot;
-paths.dest_css = paths.dest + "css/";
-paths.dest_scripts = paths.dest + "scripts/";
+paths.dest_css = `${paths.dest}css/`;
+paths.dest_scripts = `${paths.dest}scripts/`;
 
 paths.src = "./";
 paths.src_css = `${paths.src}css/**/*.css`;
