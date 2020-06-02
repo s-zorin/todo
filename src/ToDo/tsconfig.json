@@ -4,8 +4,9 @@
     "noEmitOnError": true,
     "removeComments": false,
     "sourceMap": true,
-    "target": "es6",
-    "lib": ["DOM"]
+    "target": "ES5",
+    "lib": [ "DOM" ],
+    "module": "AMD"
   },
   "compileOnSave": true,
   "exclude": [

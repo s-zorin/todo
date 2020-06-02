@@ -17,16 +17,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="tsconfig.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <!--<ItemGroup>
     <Compile Remove="wwwroot\scripts\**" />
     <Content Remove="wwwroot\scripts\**" />
     <EmbeddedResource Remove="wwwroot\scripts\**" />
     <None Remove="wwwroot\scripts\**" />
     <TypeScriptCompile Remove="node_modules\**" />
     <TypeScriptCompile Remove="wwwroot\scripts\**" />
-  </ItemGroup>
+  </ItemGroup>-->
 
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
-
+  <!--<ItemGroup>
+    <Content Include="tsconfig.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>-->
 </Project>

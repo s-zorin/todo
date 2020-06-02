@@ -16,11 +16,11 @@ var paths = {
 
 paths.dest = paths.webroot;
 paths.dest_css = `${paths.dest}css/`;
-paths.dest_scripts = `${paths.dest}scripts/`;
+paths.dest_js = `${paths.dest}js/`;
 
 paths.src = "./";
 paths.src_css = `${paths.src}css/**/*.css`;
-paths.src_scripts = [`${paths.src}scripts/**/*.ts`, `${paths.src}scripts/**/*.js`, `${paths.src}scripts/**/*.map`];
+paths.src_js = [`${paths.src}scripts/**/*.ts`, `${paths.src}scripts/**/*.js`, `${paths.src}scripts/**/*.map`];
 
 function css() {
     return src(paths.src_css)
@@ -33,9 +33,9 @@ function css() {
         .pipe(dest(paths.dest_css));
 }
 
-function scripts() {
-    return src(paths.src_scripts)
-        .pipe(dest(paths.dest_scripts));
+function js() {
+    return src(paths.src_js)
+        .pipe(dest(paths.dest_js));
 }
 
 function modules(done) {
@@ -53,7 +53,17 @@ function modules(done) {
         return parallel(css, fonts)(done);
     }
 
-    return parallel(font_awesome)(done);
+    function focus_trap() {
+        return src(`${paths.modules}focus-trap/dist/*`)
+            .pipe(dest(`${paths.dest}focus-trap`))
+    }
+
+    function requirejs() {
+        return src(`${paths.modules}requirejs/require.js`)
+            .pipe(dest(`${paths.dest}requirejs`))
+    }
+
+    return parallel(font_awesome, focus_trap, requirejs)(done);
 }
 
 function clean(done) {
@@ -61,5 +71,5 @@ function clean(done) {
     done();
 }
 
-exports.build = parallel(css, scripts, modules);
+exports.build = parallel(css, js, modules);
 exports.clean = clean;

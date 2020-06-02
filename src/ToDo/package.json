@@ -2,12 +2,15 @@
   "version": "1.0.0",
   "name": "asp.net",
   "private": true,
+  "type": "module",
   "devDependencies": {
     "gulp": "4.0.2",
     "gulp-cssmin": "0.2.0",
     "gulp-rename": "2.0.0",
     "del": "5.1.0",
-    "@fortawesome/fontawesome-free": "5.13.0"
+    "@fortawesome/fontawesome-free": "5.13.0",
+    "focus-trap": "5.1.0",
+    "requirejs": "2.3.6"
   },
   "dependencies": {}
 }
