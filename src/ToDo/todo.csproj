@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\js\typings\**" />
+    <Content Remove="wwwroot\js\typings\**" />
+    <EmbeddedResource Remove="wwwroot\js\typings\**" />
+    <None Remove="wwwroot\js\typings\**" />
+    <TypeScriptCompile Remove="wwwroot\js\typings\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.4" />
     <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.9.2">
       <PrivateAssets>all</PrivateAssets>

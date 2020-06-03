@@ -1,37 +1,33 @@
-﻿import focusTrap = require("focus-trap");
+﻿import * as modal from "../shared/components/modal";
+import focusTrap from "focus-trap";
 
 const deleteButton = document.getElementById("delete-button") as HTMLButtonElement;
 const modalCancelButton = document.getElementById("modal-cancel-button") as HTMLButtonElement;
-const modal = document.getElementById("delete-confirmation-modal") as HTMLElement;
-const trap = focusTrap(modal, null);
+const modalElement = document.getElementById("delete-confirmation-modal") as HTMLElement;
 
 if (deleteButton) {
     deleteButton.onclick = showModal;
 }
 
-if (modalCancelButton) {
+if (modalCancelButton) { 
     modalCancelButton.onclick = hideModal;
 }
 
-if (modal) {
-    modal.onclick = function (event) {
-        if (event.target === modal) {
-            hideModal(); 
-        }
-    }
+if (modalElement) {
+    modalElement.onclick = hideModal;
 }
 
 function showModal() {
-    if (modal) {
-        modal.style.display = "block";
-        trap.activate();
-    }
+    modal.showModal(modalElement);
 }
 
-function hideModal() {
-    if (modal) {
-        modal.style.display = "none";
-        trap.deactivate();
+function hideModal(): void
+function hideModal(event?: MouseEvent): void {
+    if (event) {
+        if (event.target != event.currentTarget) {
+            return;
+        }
     }
-}
 
+    modal.hideModal(modalElement);
+}

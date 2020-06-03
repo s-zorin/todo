@@ -7,7 +7,26 @@
 
     async Task<IHtmlContent> RenderStatusIconAsync()
     {
-        return await Component.InvokeAsync("StatusIcon", new { DueDate = Model.Task.DueDate, IsCompleted = Model.Task.IsCompleted });
+        return await Component.InvokeAsync("StatusIcon", new
+        {
+            DueDate = Model.Task.DueDate,
+            IsCompleted = Model.Task.IsCompleted
+        });
+    }
+
+    async Task<IHtmlContent> RenderModalAsync()
+    {
+        return await Component.InvokeAsync("Modal", new
+        {
+            Id = "delete-confirmation-modal",
+            Title = "Delete Task",
+            Message = "Please confirm task deletion.",
+            Actions = new[]
+            {
+                (HtmlTemplate)(@<button class="destructive" type="submit" form="task-delete-form"><i class="fas fa-times"></i>Delete</button>),
+                (HtmlTemplate)(@<button id="modal-cancel-button"><i class="fas fa-share"></i>Cancel</button>),
+            }
+        });
     }
 }
 
@@ -25,24 +44,16 @@
 }
 
 @section Scripts {
-    <script data-main="views.tasks.single" src="~/requirejs/require.js"></script>
+    <script data-main="views/tasks/single" src="~/requirejs/require.js"></script>
 }
 
 @section Overlay {
-    <div id="delete-confirmation-modal" class="modal">
-        <div>
-            <h1>Delete task</h1>
-            <p>Please confirm task deletion.</p>
-            <div class="actions-container">
-                <button class="destructive" type="submit" form="task-delete-form"><i class="fas fa-times"></i>Delete</button>
-                <button id="modal-cancel-button"><i class="fas fa-share"></i>Cancel</button>
-            </div>
-            <form id="task-delete-form" asp-action="SubmitDelete" asp-route-id="@Model.Task.Id" method="post">
-            </form>
-        </div>
-    </div>
+    @await RenderModalAsync()
 }
 
 <h2 class="task-name">@Model.Task.Name@await RenderStatusIconAsync()</h2>
 <p>Due date: <span>@Model.Task.DueDate.ToString("d")</span></p>
 <p class="task-description">@Model.Task.Description</p>
+
+<form id="task-delete-form" asp-action="SubmitDelete" asp-route-id="@Model.Task.Id" method="post">
+</form>

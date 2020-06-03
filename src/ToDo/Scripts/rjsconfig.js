@@ -1,7 +1,7 @@
-var require = {
+﻿var require = {
+    baseUrl: "/js/",
     paths: {
         "focus-trap": "/focus-trap/focus-trap",
-        "views.tasks.single": "/js/views/tasks/single"
+        "typescript-collections": "/typescript-collections/umd"
     }
 };
-//# sourceMappingURL=rjsconfig.js.map

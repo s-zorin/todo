@@ -1,0 +1,14 @@
+﻿@model ToDo.Views.Shared.Components.Modal.ModalViewComponentModel
+
+<div id="@Model.Id" class="modal">
+    <div>
+        <h1>@Model.Title</h1>
+        <p>@Model.Message</p>
+        <div class="actions-container">
+            @foreach (var action in Model.Actions)
+            {
+                @action(null)
+            }
+        </div>
+    </div>
+</div>

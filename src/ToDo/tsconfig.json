@@ -1,12 +1,16 @@
 {
   "compilerOptions": {
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "noEmitOnError": true,
     "removeComments": false,
     "sourceMap": true,
-    "target": "ES5",
-    "lib": [ "DOM" ],
-    "module": "AMD"
+    "target": "ESNext",
+    "lib": [ "DOM", "ESNext" ],
+    "module": "AMD",
+    "moduleResolution": "Node",
+    "baseUrl": "node_modules"
   },
   "compileOnSave": true,
   "exclude": [

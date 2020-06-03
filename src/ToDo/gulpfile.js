@@ -63,7 +63,12 @@ function modules(done) {
             .pipe(dest(`${paths.dest}requirejs`))
     }
 
-    return parallel(font_awesome, focus_trap, requirejs)(done);
+    function typescript_collections() {
+        return src(`${paths.modules}typescript-collections/dist/lib/*`)
+            .pipe(dest(`${paths.dest}typescript-collections`))
+    }
+
+    return parallel(font_awesome, focus_trap, requirejs, typescript_collections)(done);
 }
 
 function clean(done) {
