@@ -7,14 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\js\typings\**" />
-    <Content Remove="wwwroot\js\typings\**" />
-    <EmbeddedResource Remove="wwwroot\js\typings\**" />
-    <None Remove="wwwroot\js\typings\**" />
-    <TypeScriptCompile Remove="wwwroot\js\typings\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.4" />
     <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.9.2">
       <PrivateAssets>all</PrivateAssets>
@@ -29,19 +21,4 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-
-  <!--<ItemGroup>
-    <Compile Remove="wwwroot\scripts\**" />
-    <Content Remove="wwwroot\scripts\**" />
-    <EmbeddedResource Remove="wwwroot\scripts\**" />
-    <None Remove="wwwroot\scripts\**" />
-    <TypeScriptCompile Remove="node_modules\**" />
-    <TypeScriptCompile Remove="wwwroot\scripts\**" />
-  </ItemGroup>-->
-
-  <!--<ItemGroup>
-    <Content Include="tsconfig.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>-->
 </Project>
