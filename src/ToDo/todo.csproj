@@ -21,4 +21,15 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
+  <ItemGroup>
+    <ContentWithTargetPath Include="Deploy\apply_migrations.sh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>apply_migrations.sh</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="Deploy\ef.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>ef.dll</TargetPath>
+    </ContentWithTargetPath>
+  </ItemGroup>
 </Project>
