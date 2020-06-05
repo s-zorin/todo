@@ -42,11 +42,15 @@ ul.task-list {
     height: 100%;
 }
 
-li.task-item {
+li.task-item,
+li.task-item-completed, 
+li.task-item-overdue {
     margin-bottom: 0.125rem;
 }
 
-li.task-item > a {
+li.task-item a,
+li.task-item-completed a,
+li.task-item-overdue a {
     color: var(--foreground-color);
     text-decoration: none;
     display: block;
@@ -56,7 +60,23 @@ li.task-item > a {
     transition-duration: 70ms;
 }
 
-li.task-item > a:hover {
+li.task-item-completed a {
+    background-color: var(--list-item-completed-color);
+}
+
+li.task-item-completed a:hover {
+    background-color: var(--list-item-completed-color-hover);
+}
+
+li.task-item-overdue a {
+    background-color: var(--list-item-overdue-color);
+}
+
+li.task-item-overdue a:hover {
+    background-color: var(--list-item-overdue-color-hover);
+}
+
+li.task-item a:hover {
     background-color: var(--list-item-color-hover);
 }
 

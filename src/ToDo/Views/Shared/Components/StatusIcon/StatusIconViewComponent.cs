@@ -1,15 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace ToDo.Views.Shared.Components.StatusIcon
 {
     public class StatusIconViewComponent : ViewComponent
     {
-        public IViewComponentResult Invoke(DateTimeOffset dueDate, bool isCompleted)
+        public IViewComponentResult Invoke(bool isOverdue, bool isCompleted)
         {
             var model = new StatusIconViewComponentModel
             {
-                DueDate = dueDate,
+                IsOverdue = isOverdue,
                 IsCompleted = isCompleted,
             };
 

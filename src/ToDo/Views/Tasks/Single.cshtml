@@ -9,7 +9,7 @@
     {
         return await Component.InvokeAsync("StatusIcon", new
         {
-            DueDate = Model.Task.DueDate,
+            IsOverdue = Model.Task.IsOverdue,
             IsCompleted = Model.Task.IsCompleted
         });
     }

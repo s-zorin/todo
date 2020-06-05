@@ -2,10 +2,20 @@
 
 @{
     ViewData["Title"] = "All Tasks";
-}
 
-@section Scripts {
-    <script src="~/scripts/script.js"></script>
+    string SelectTaskItemClass(ToDo.Models.Task task)
+    {
+        if (task.IsCompleted)
+        {
+            return "task-item-completed";
+        }
+        else if (task.IsOverdue)
+        {
+            return "task-item-overdue";
+        }
+
+        return "task-item";
+    }
 }
 
 @section Actions {
@@ -15,6 +25,6 @@
 <ul class="task-list">
     @foreach (var task in @Model.Tasks)
     {
-        <li class="task-item"><a asp-action="Single" asp-route-id="@task.Id">@task.Name</a></li>
+        <li class="@SelectTaskItemClass(task)"><a asp-action="Single" asp-route-id="@task.Id">@task.Name</a></li>
     }
 </ul>

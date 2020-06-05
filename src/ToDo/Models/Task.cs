@@ -16,6 +16,8 @@ namespace ToDo.Models
 
         public bool IsCompleted { get; set; }
 
+        public bool IsOverdue => DueDate < DateTimeOffset.Now;
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (DueDate < DateTimeOffset.Now)

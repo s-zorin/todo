@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 using ToDo.Data;
 
@@ -17,9 +16,17 @@ namespace ToDo.Controllers
 
         public IActionResult Index()
         {
+            var now = DateTimeOffset.Now;
+
             var viewModel = new ToDo.ViewModels.Tasks.Index
             {
-                Tasks = context.Tasks.ToList(),
+                // Sort tasks as Overdue > ToDo > Completed. Then sort each group by due date.
+                Tasks = context.Tasks
+                .Select(t => new { Priority = t.IsCompleted ? 2 : t.DueDate < now ? 0 : 1, Value = t })
+                .OrderBy(t => t.Priority)
+                .ThenBy(t => t.Value.DueDate)
+                .Select(t => t.Value)
+                .ToList()
             };
 
             return View(viewModel);

@@ -5,7 +5,7 @@
     {
         <i class="fas fa-check status-mark-completed"></i>
     }
-    else if (Model.DueDate < DateTimeOffset.Now)
+    else if (Model.IsOverdue)
     {
         <i class="fas fa-fire status-mark-overdue"></i>
     }

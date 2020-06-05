@@ -1,12 +1,24 @@
 ﻿* {
-    --background-color: #efefef;
-    --foreground-color: #2c2c2c;
-    --border-color: #b6b6b6;
+    --red-color: #e88b8b;
+    --dark-red-color: #cf7f7f;
+    --green-color: #9aded4;
+    --dark-green-color: #8cc7be;
+    --gray-color: #efefef;
+    --darker-gray-color: #e0e0e0;
+    --dark-gray-color: #b6b6b6;
+    --almost-black-color: #2c2c2c;
+    --background-color: var(--gray-color);
+    --foreground-color: var(--almost-black-color);
+    --border-color: var(--dark-gray-color);
     --shadow-color: rgba(78, 78, 78, 0.60);
-    --list-item-color: #9aded4;
-    --list-item-color-hover: #73d3c5;
-    --icon-color: #9aded4;
-    --icon-destructive-color: #e88b8b;
-    --invalid-input-color: #e88b8b;
+    --list-item-color: var(--darker-gray-color);
+    --list-item-color-hover: var(--dark-gray-color);
+    --list-item-completed-color: var(--green-color);
+    --list-item-completed-color-hover: var(--dark-green-color);
+    --list-item-overdue-color: var(--red-color);
+    --list-item-overdue-color-hover: var(--dark-red-color);
+    --icon-color: var(--green-color);
+    --icon-destructive-color: var(--red-color);
+    --invalid-input-color: var(--red-color);
     box-sizing: border-box;
 }
