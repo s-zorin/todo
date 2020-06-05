@@ -30,6 +30,10 @@ div.content-container {
     min-height: 0;
 }
 
+/*
+    Task list.
+*/
+
 ul.task-list {
     list-style-type: none;
     margin: 0;
@@ -55,6 +59,10 @@ li.task-item > a {
 li.task-item > a:hover {
     background-color: var(--list-item-color-hover);
 }
+
+/*
+    App container.
+*/
 
 /* Enough space both horizontally and vertically. */
 @media not screen and (max-width: 40rem) and (max-height: 50rem) {
@@ -125,6 +133,10 @@ div.app-container {
     margin: 0.5rem;
     color: var(--icon-destructive-color);
 }
+
+/*
+    Action buttons and action containers.
+*/
 
 a.hyperlink-button, a.hyperlink-button-destructive {
     color: var(--foreground-color);
@@ -199,14 +211,15 @@ div.actions-container a.destructive:hover > i, div.actions-container button.dest
     }
 }
 
-form {
-
-}
+/*
+    Forms.
+*/
 
 form input {
     font-family: inherit;
     font-size: inherit;
     color: inherit;
+    box-shadow: none; /* Remove weird glow around invalid inputs, we dont need that. */
 }
 
 form label {
@@ -216,16 +229,16 @@ form label {
     font-size: 0.75rem;
 }
 
-form input[type=text] {
+form input[type=text],
+form input[type=date] {
     padding: 0.5rem;
     border: 0.125rem solid var(--border-color);
     width: 100%;
 }
 
-form input[type=date] {
-    padding: 0.5rem;
-    border: 0.125rem solid var(--border-color);
-    width: 100%;
+form input[type=text]:invalid,
+form input[type=date]:invalid {
+    border-color: var(--invalid-input-color);
 }
 
 form textarea {
@@ -237,6 +250,7 @@ form textarea {
     height: 5rem;
     width: 100%;
     resize: vertical;
+    box-shadow: none; /* Remove glow there as well. */
 }
 
 form div.group {

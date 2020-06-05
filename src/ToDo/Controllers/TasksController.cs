@@ -84,6 +84,14 @@ namespace ToDo.Controllers
         [HttpPost]
         public IActionResult SubmitEdits(string? id, [Bind("Name", "Description", "DueDate", Prefix = "Task")] Models.Task submittedTask)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Edit", new ToDo.ViewModels.Tasks.Edit
+                {
+                    Task = submittedTask
+                });
+            }
+
             var task = context.Find<ToDo.Models.Task>(id);
 
             if (task == null)

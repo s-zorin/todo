@@ -1,11 +1,15 @@
 ﻿@model ToDo.ViewModels.Tasks.Edit
 
 @{
-    ViewData["Title"] = "Edit Task";
+    ViewData["Title"] = Model.Task.Id != null ? "Edit Task" : "Create Task";
 }
 
 @section Actions {
     <button type="submit" form="task-edit-form"><i class="fas fa-clipboard-check"></i>Save</button>
+}
+
+@section Scripts {
+    <script data-main="views/tasks/edit" src="~/requirejs/require.js"></script>
 }
 
 <form id="task-edit-form" asp-action="SubmitEdits" asp-route-id="@Model.Task.Id" method="post">

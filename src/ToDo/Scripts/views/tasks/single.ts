@@ -1,5 +1,4 @@
 ﻿import * as modal from "../shared/components/modal";
-import focusTrap from "focus-trap";
 
 const deleteButton = document.getElementById("delete-button") as HTMLButtonElement;
 const modalCancelButton = document.getElementById("modal-cancel-button") as HTMLButtonElement;

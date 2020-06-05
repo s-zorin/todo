@@ -7,5 +7,6 @@
     --list-item-color-hover: #73d3c5;
     --icon-color: #9aded4;
     --icon-destructive-color: #e88b8b;
+    --invalid-input-color: #e88b8b;
     box-sizing: border-box;
 }
