@@ -44,6 +44,15 @@ namespace ToDo.Models
                     IsCompleted = true
                 });
 
+                context.Tasks.Add(new Models.Task
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = "Tidy up",
+                    DueDate = DateTimeOffset.Now.AddHours(1),
+                    Description = "What is this? A man cave?",
+                    IsCompleted = true
+                });
+
                 context.SaveChanges();
             }
         }
