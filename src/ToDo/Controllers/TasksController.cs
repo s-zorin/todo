@@ -1,65 +1,61 @@
 using System;
-using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ToDo.Data;
+using ToDo.Services;
 
 namespace ToDo.Controllers
 {
     public sealed class TasksController : Controller
     {
-        private readonly ToDoDbContext context;
+        private readonly IToDoService toDoService;
 
-        public TasksController(ToDoDbContext context)
+        public TasksController(IToDoService toDoService)
         {
-            this.context = context;
+            this.toDoService = toDoService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var now = DateTimeOffset.Now;
+            var result = await toDoService.GetSortedTasksAsync();
 
-            var viewModel = new ToDo.ViewModels.Tasks.Index
+            if (!result.IsOk)
             {
-                // Sort tasks as Overdue > ToDo > Completed. Then sort each group by due date.
-                Tasks = context.Tasks
-                .Select(t => new { Priority = t.IsCompleted ? 2 : t.DueDate < now ? 0 : 1, Value = t })
-                .OrderBy(t => t.Priority)
-                .ThenBy(t => t.Value.DueDate)
-                .Select(t => t.Value)
-                .ToList()
+                return BadRequest();
+            }
+
+            var viewModel = new ViewModels.Tasks.Index
+            {
+                Tasks = result.Value
             };
 
             return View(viewModel);
         }
 
-        public IActionResult Single(string? id)
+        public async Task<IActionResult> Single(string? id)
         {
-            var task = context.Find<ToDo.Models.Task>(id);
+            var result = await toDoService.GetTaskAsync(id);
 
-            if (task == null)
+            if (!result.IsOk)
             {
-                return NotFound("Task not found.");
+                return BadRequest();
             }
 
-            var viewModel = new ToDo.ViewModels.Tasks.Single
+            var viewModel = new ViewModels.Tasks.Single
             {
-                Task = task,
+                Task = result.Value,
             };
 
             return View(viewModel);
         }
 
-        public IActionResult Complete(string? id)
+        public async Task<IActionResult> Complete(string? id)
         {
-            var task = context.Find<ToDo.Models.Task>(id);
+            var result = await toDoService.CompleteTaskAsync(id);
 
-            if (task == null)
+            if (!result.IsOk)
             {
-                return NotFound("Task not found.");
+                return BadRequest();
             }
-
-            task.IsCompleted = true;
-            context.SaveChanges();
             
             var referer = Request.Headers["Referer"];
 
@@ -71,70 +67,56 @@ namespace ToDo.Controllers
             return RedirectToAction("Index", "Tasks");
         }
 
-        public IActionResult Edit(string? id)
+        public async Task<IActionResult> Edit(string? id)
         {
-            var task = context.Find<ToDo.Models.Task>(id);
+            var result = await toDoService.GetTaskAsync(id);
 
-            if (task == null)
+            if (!result.IsOk)
             {
-                return NotFound("Task not found.");
+                return BadRequest();
             }
 
-            var viewModel = new ToDo.ViewModels.Tasks.Edit
+            var viewModel = new ViewModels.Tasks.Edit
             {
-                Task = task,
+                Task = result.Value,
             };
 
             return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult SubmitEdits(string? id, [Bind("Name", "Description", "DueDate", Prefix = "Task")] Models.Task submittedTask)
+        public async Task<IActionResult> SubmitEdits(string? id, [Bind("Name", "Description", "DueDate", Prefix = "Task")] Models.Task submittedTask)
         {
             if (!ModelState.IsValid)
             {
-                return View("Edit", new ToDo.ViewModels.Tasks.Edit
+                var viewModel = new ViewModels.Tasks.Edit
                 {
                     Task = submittedTask
-                });
-            }
-
-            var task = context.Find<ToDo.Models.Task>(id);
-
-            if (task == null)
-            {
-                task = new ToDo.Models.Task
-                {
-                    Id = id ?? Guid.NewGuid().ToString(),
-                    Name = submittedTask.Name,
-                    Description = submittedTask.Description,
-                    DueDate = submittedTask.DueDate,
                 };
 
-                context.Add(task);
+                return View("Edit", viewModel);
             }
-            else
+
+            var result = await toDoService.SaveTaskAsync(id, submittedTask);
+
+            if (!result.IsOk)
             {
-                task.Name = submittedTask.Name;
-                task.Description = submittedTask.Description;
-                task.DueDate = submittedTask.DueDate;
+                return BadRequest();
             }
 
-            context.SaveChanges();
-
-            return RedirectToAction("Single", "Tasks", new { task.Id });
+            return RedirectToAction("Single", "Tasks", new { result.Value.Id });
         }
 
         public IActionResult Create()
         {
-            var task = new ToDo.Models.Task
+            var task = new Models.Task
             {
                 Name = "New Task",
                 Description = null,
                 DueDate = DateTimeOffset.Now.Date,
             };
 
-            var viewModel = new ToDo.ViewModels.Tasks.Edit
+            var viewModel = new ViewModels.Tasks.Edit
             {
                 Task = task,
             };
@@ -142,34 +124,27 @@ namespace ToDo.Controllers
             return View("Edit", viewModel);
         }
 
-        public IActionResult ToDo(string? id)
+        public async Task<IActionResult> ToDo(string? id)
         {
-            var task = context.Find<ToDo.Models.Task>(id);
+            var result = await toDoService.ToDoTaskAsync(id);
 
-            if (task == null)
+            if (!result.IsOk)
             {
-                return NotFound("Task not found");
+                return BadRequest();
             }
 
-            task.IsCompleted = false;
-
-            context.SaveChanges();
-
-            return RedirectToAction("Edit", "Tasks", new { task.Id });
+            return RedirectToAction("Edit", "Tasks", new { id });
         }
 
         [HttpPost]
-        public IActionResult SubmitDelete(string? id)
+        public async Task<IActionResult> SubmitDelete(string? id)
         {
-            var task = context.Find<ToDo.Models.Task>(id);
+            var result = await toDoService.DeleteTaskAsync(id);
 
-            if (task == null)
+            if (!result.IsOk)
             {
-                return NotFound("Task not found");
+                return BadRequest();
             }
-
-            context.Tasks.Remove(task);
-            context.SaveChanges();
 
             return RedirectToAction("Index", "Tasks");
         }

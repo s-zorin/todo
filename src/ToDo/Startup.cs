@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ToDo.Data;
+using ToDo.Services;
 
 namespace todo
 {
@@ -30,6 +31,7 @@ namespace todo
             services.AddDbContext<ToDoDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("ToDoDbContext")));
             services.AddMvc();
             services.AddControllers();
+            services.AddScoped<IToDoService, ToDoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
