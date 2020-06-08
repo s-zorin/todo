@@ -4,38 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ToDo.Data;
+using ToDo.Services.Results;
 
 namespace ToDo.Services
 {
-    public interface IServiceResult
-    {
-        bool IsOk { get; }
-    }
-
-    public interface IServiceResult<T> : IServiceResult
-    {
-        T Value { get; }
-    }
-
-    public class ServiceResult : IServiceResult
-    {
-        public bool IsOk { get; }
-
-        public ServiceResult(bool isOk)
-        {
-            IsOk = isOk;
-        }
-    }
-
-    public class ServiceResult<T> : ServiceResult, IServiceResult<T>
-    {
-        public T Value { get; }
-
-        public ServiceResult(bool isOk, T value) : base(isOk)
-        {
-            Value = value;
-        }
-    }
 
     public class ToDoService : IToDoService
     {
