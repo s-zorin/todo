@@ -51,7 +51,7 @@ namespace ToDo.Services
             }
 
             task.IsCompleted = true;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             return new ServiceResult(true);
         }
@@ -66,35 +66,23 @@ namespace ToDo.Services
             }
 
             task.IsCompleted = false;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             return new ServiceResult(true);
         }
 
-        public async Task<IServiceResult<Models.Task>> SaveTaskAsync(string? taskId, Models.Task value)
+        public async Task<IServiceResult<Models.Task>> SaveTaskAsync(string? taskId, Models.Task task)
         {
-            var task = await context.FindAsync<Models.Task>(taskId);
+            var existingTask = await context.FindAsync<Models.Task>(taskId);
 
-            if (task == null)
+            if (existingTask == null)
             {
-                task = new Models.Task
-                {
-                    Id = taskId ?? Guid.NewGuid().ToString(),
-                    Name = value.Name,
-                    Description = value.Description,
-                    DueDate = value.DueDate,
-                };
-
-                context.Add(task);
+                await SaveNewTaskAsync(task);
             }
             else
             {
-                task.Name = value.Name;
-                task.Description = value.Description;
-                task.DueDate = value.DueDate;
+                await UpdateExistingTaskAsync(existingTask, task);
             }
-
-            context.SaveChanges();
 
             return new ServiceResult<Models.Task>(true, task);
         }
@@ -109,9 +97,31 @@ namespace ToDo.Services
             }
 
             context.Tasks.Remove(task);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             return new ServiceResult(true);
+        }
+
+        private async Task SaveNewTaskAsync(Models.Task task)
+        {
+            var newTask = new Models.Task
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = task.Name,
+                Description = task.Description,
+                DueDate = task.DueDate,
+            };
+
+            context.Add(newTask);
+            await context.SaveChangesAsync();
+        }
+
+        private async Task UpdateExistingTaskAsync(Models.Task existingTask, Models.Task task)
+        {
+            existingTask.Name = task.Name;
+            existingTask.Description = task.Description;
+            existingTask.DueDate = task.DueDate;
+            await context.SaveChangesAsync();
         }
     }
 }
