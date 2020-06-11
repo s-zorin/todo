@@ -49,7 +49,7 @@ namespace ToDo.Controllers
                 return Redirect(referer);
             }
 
-            return RedirectToAction("Index", "Tasks");
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(string? id)
@@ -74,12 +74,12 @@ namespace ToDo.Controllers
                     Task = submittedTask
                 };
 
-                return View("Edit", viewModel);
+                return View(nameof(Edit), viewModel);
             }
 
             var id = await toDoService.AddOrUpdateTaskAsync(submittedTask);
 
-            return RedirectToAction("Single", "Tasks", new { id });
+            return RedirectToAction(nameof(Single), new { id });
         }
 
         public IActionResult Create()
@@ -104,7 +104,7 @@ namespace ToDo.Controllers
         {
             await toDoService.ToDoTaskAsync(id);
 
-            return RedirectToAction("Edit", "Tasks", new { id });
+            return RedirectToAction(nameof(Edit), new { id });
         }
 
         [HttpPost]
@@ -112,7 +112,7 @@ namespace ToDo.Controllers
         {
             await toDoService.DeleteTaskAsync(id);
 
-            return RedirectToAction("Index", "Tasks");
+            return RedirectToAction(nameof(Index));
         }
     }
 }
