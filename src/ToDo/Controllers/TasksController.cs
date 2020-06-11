@@ -97,7 +97,7 @@ namespace ToDo.Controllers
                 Task = task,
             };
 
-            return View("Edit", viewModel);
+            return View(nameof(Edit), viewModel);
         }
 
         public async Task<IActionResult> ToDo(string? id)
