@@ -5,10 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using ToDo.Data;
 using ToDo.Extensions;
+using ToDo.Models;
 
 namespace ToDo.Services
 {
-
     public class ToDoService : IToDoService
     {
         private readonly ToDoDbContext context;
@@ -18,7 +18,7 @@ namespace ToDo.Services
             this.context = context;
         }
 
-        public async Task<IEnumerable<Models.Task>> GetSortedTasksAsync()
+        public async Task<IEnumerable<TaskModel>> GetSortedTasksAsync()
         {
             // Making EF happy.
             var now = DateTimeOffset.Now;
@@ -34,9 +34,9 @@ namespace ToDo.Services
             return tasks;
         }
 
-        public async Task<Models.Task> GetTaskAsync(string? taskId)
+        public async Task<TaskModel> GetTaskAsync(string? taskId)
         {
-            var task = await context.FindAsync<Models.Task>(taskId);
+            var task = await context.FindAsync<TaskModel>(taskId);
 
             if (task == null)
             {
@@ -48,7 +48,7 @@ namespace ToDo.Services
 
         public async Task CompleteTaskAsync(string? taskId)
         {
-            var task = await context.FindAsync<Models.Task>(taskId);
+            var task = await context.FindAsync<TaskModel>(taskId);
 
             if (task == null)
             {
@@ -61,7 +61,7 @@ namespace ToDo.Services
 
         public async Task ToDoTaskAsync(string? taskId)
         {
-            var task = await context.FindAsync<Models.Task>(taskId);
+            var task = await context.FindAsync<TaskModel>(taskId);
 
             if (task == null)
             {
@@ -72,7 +72,7 @@ namespace ToDo.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task<string> AddOrUpdateTaskAsync(Models.Task task)
+        public async Task<string> AddOrUpdateTaskAsync(TaskModel task)
         {
             var entry = await context.AddOrUpdateAsync(task);
             await context.SaveChangesAsync();
@@ -81,7 +81,7 @@ namespace ToDo.Services
 
         public async Task DeleteTaskAsync(string? taskId)
         {
-            var task = await context.FindAsync<Models.Task>(taskId);
+            var task = await context.FindAsync<TaskModel>(taskId);
 
             if (task == null)
             {

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using ToDo.Models;
 
 namespace ToDo.Services
 {
@@ -9,11 +10,11 @@ namespace ToDo.Services
 
         Task DeleteTaskAsync(string? taskId);
 
-        Task<IEnumerable<Models.Task>> GetSortedTasksAsync();
+        Task<IEnumerable<TaskModel>> GetSortedTasksAsync();
 
-        Task<Models.Task> GetTaskAsync(string? taskId);
+        Task<TaskModel> GetTaskAsync(string? taskId);
 
-        Task<string> AddOrUpdateTaskAsync(Models.Task value);
+        Task<string> AddOrUpdateTaskAsync(TaskModel value);
 
         Task ToDoTaskAsync(string? taskId);
     }

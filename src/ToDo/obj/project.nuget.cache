@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "tD6zKYDlA5woNd86j9xql5vnosqaIECng03vxlfofbwTX2s03cEWR95mSmZkfiXq7eM4xYOtWgQO1pBRXGqABg==",
+  "dgSpecHash": "LKF5iMl5zzKUKB+SMQfsUtFrHzNJDMOHQRGhJtwSR1IgqiCDR6UVL3/IyWn/pUihSUEqQkxm8Z9vpS+CTBASog==",
   "success": true,
   "projectFilePath": "C:\\html\\todo\\src\\todo\\ToDo.csproj",
   "expectedPackageFiles": [
@@ -22,6 +22,7 @@
     "C:\\Users\\serge\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\3.1.4\\microsoft.entityframeworkcore.analyzers.3.1.4.nupkg.sha512",
     "C:\\Users\\serge\\.nuget\\packages\\microsoft.entityframeworkcore.design\\3.1.4\\microsoft.entityframeworkcore.design.3.1.4.nupkg.sha512",
     "C:\\Users\\serge\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\3.1.4\\microsoft.entityframeworkcore.relational.3.1.4.nupkg.sha512",
+    "C:\\Users\\serge\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\3.1.4\\microsoft.entityframeworkcore.tools.3.1.4.nupkg.sha512",
     "C:\\Users\\serge\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\3.1.4\\microsoft.extensions.caching.abstractions.3.1.4.nupkg.sha512",
     "C:\\Users\\serge\\.nuget\\packages\\microsoft.extensions.caching.memory\\3.1.4\\microsoft.extensions.caching.memory.3.1.4.nupkg.sha512",
     "C:\\Users\\serge\\.nuget\\packages\\microsoft.extensions.configuration\\3.1.4\\microsoft.extensions.configuration.3.1.4.nupkg.sha512",

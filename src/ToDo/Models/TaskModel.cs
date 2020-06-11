@@ -5,7 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ToDo.Models
 {
-    public sealed class Task : IValidatableObject
+    [Table("Tasks")]
+    public sealed class TaskModel : IValidatableObject
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string? Id { get; set; }

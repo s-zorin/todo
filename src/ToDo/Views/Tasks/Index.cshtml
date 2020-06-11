@@ -1,9 +1,9 @@
-@model ToDo.ViewModels.Tasks.Index
+@model ToDo.ViewModels.Tasks.IndexViewModel
 
 @{
     ViewData["Title"] = "All Tasks";
 
-    string SelectTaskItemClass(ToDo.Models.Task task)
+    string SelectTaskItemClass(ToDo.Models.TaskModel task)
     {
         if (task.IsCompleted)
         {

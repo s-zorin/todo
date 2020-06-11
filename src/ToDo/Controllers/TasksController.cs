@@ -1,7 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ToDo.Models;
 using ToDo.Services;
+using ToDo.ViewModels.Tasks;
 
 namespace ToDo.Controllers
 {
@@ -18,7 +20,7 @@ namespace ToDo.Controllers
         {
             var sortedTasks = await toDoService.GetSortedTasksAsync();
 
-            var viewModel = new ViewModels.Tasks.Index
+            var viewModel = new IndexViewModel
             {
                 Tasks = sortedTasks,
             };
@@ -30,7 +32,7 @@ namespace ToDo.Controllers
         {
             var task = await toDoService.GetTaskAsync(id);
 
-            var viewModel = new ViewModels.Tasks.Single
+            var viewModel = new SingleViewModel
             {
                 Task = task,
             };
@@ -56,7 +58,7 @@ namespace ToDo.Controllers
         {
             var task = await toDoService.GetTaskAsync(id);
 
-            var viewModel = new ViewModels.Tasks.Edit
+            var viewModel = new EditViewModel
             {
                 Task = task,
             };
@@ -65,11 +67,11 @@ namespace ToDo.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SubmitEdit([Bind("Id", "Name", "Description", "DueDate", Prefix = "Task")] Models.Task submittedTask)
+        public async Task<IActionResult> SubmitEdit([Bind("Id", "Name", "Description", "DueDate", Prefix = "Task")] TaskModel submittedTask)
         {
             if (!ModelState.IsValid)
             {
-                var viewModel = new ViewModels.Tasks.Edit
+                var viewModel = new EditViewModel
                 {
                     Task = submittedTask
                 };
@@ -84,7 +86,7 @@ namespace ToDo.Controllers
 
         public IActionResult Create()
         {
-            var task = new Models.Task
+            var task = new TaskModel
             {
                 Id = null,
                 Name = "New Task",
@@ -92,7 +94,7 @@ namespace ToDo.Controllers
                 DueDate = DateTimeOffset.Now.Date,
             };
 
-            var viewModel = new ViewModels.Tasks.Edit
+            var viewModel = new EditViewModel
             {
                 Task = task,
             };

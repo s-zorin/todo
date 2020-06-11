@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ToDo.Models;
 
 namespace ToDo.Data
 {
@@ -9,6 +10,6 @@ namespace ToDo.Data
         {
         }
 
-        public DbSet<Models.Task> Tasks { get; set; } = null!;
+        public DbSet<TaskModel> Tasks { get; set; } = null!;
     }
 }

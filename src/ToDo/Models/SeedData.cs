@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using ToDo.Data;
 
 namespace ToDo.Models
@@ -19,21 +17,21 @@ namespace ToDo.Models
                     return;
                 }
 
-                context.Tasks.Add(new Models.Task
+                context.Tasks.Add(new TaskModel
                 {
                     Name = "Water the flowers",
                     DueDate = DateTimeOffset.Now.AddDays(1).AddHours(5),
                     IsCompleted = false
                 });
 
-                context.Tasks.Add(new Models.Task
+                context.Tasks.Add(new TaskModel
                 {
                     Name = "Feed the cat",
                     DueDate = DateTimeOffset.Now.AddHours(8),
                     IsCompleted = false
                 });
 
-                context.Tasks.Add(new Models.Task
+                context.Tasks.Add(new TaskModel
                 {
                     Name = "Read a book",
                     DueDate = DateTimeOffset.Now.AddHours(-20),
@@ -41,7 +39,7 @@ namespace ToDo.Models
                     IsCompleted = true
                 });
 
-                context.Tasks.Add(new Models.Task
+                context.Tasks.Add(new TaskModel
                 {
                     Name = "Tidy up",
                     DueDate = DateTimeOffset.Now.AddHours(1),
