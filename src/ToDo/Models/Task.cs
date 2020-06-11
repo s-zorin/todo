@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ToDo.Models
 {
     public sealed class Task : IValidatableObject
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string? Id { get; set; }
 
         public string Name { get; set; } = null!;
@@ -20,7 +22,7 @@ namespace ToDo.Models
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (DueDate < DateTimeOffset.Now)
+            if (DueDate.Date < DateTimeOffset.Now.Date)
             {
                 yield return new ValidationResult("Due date can not be in the past.");
             }

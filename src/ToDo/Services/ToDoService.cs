@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ToDo.Data;
-using ToDo.Services.Results;
+using ToDo.Extensions;
 
 namespace ToDo.Services
 {
@@ -18,7 +18,7 @@ namespace ToDo.Services
             this.context = context;
         }
 
-        public async Task<IServiceResult<IEnumerable<Models.Task>>> GetSortedTasksAsync()
+        public async Task<IEnumerable<Models.Task>> GetSortedTasksAsync()
         {
             // Making EF happy.
             var now = DateTimeOffset.Now;
@@ -31,96 +31,64 @@ namespace ToDo.Services
                 .Select(t => t.Value)
                 .ToListAsync();
 
-            return new ServiceResult<IEnumerable<Models.Task>>(true, tasks);
+            return tasks;
         }
 
-        public async Task<IServiceResult<Models.Task>> GetTaskAsync(string? taskId)
-        {
-            var task = await context.FindAsync<Models.Task>(taskId);
-
-            return new ServiceResult<Models.Task>(true, task);
-        }
-
-        public async Task<IServiceResult> CompleteTaskAsync(string? taskId)
+        public async Task<Models.Task> GetTaskAsync(string? taskId)
         {
             var task = await context.FindAsync<Models.Task>(taskId);
 
             if (task == null)
             {
-                return new ServiceResult(false);
+                throw new InvalidOperationException("Task with given ID was not found.");
+            }
+
+            return task;
+        }
+
+        public async Task CompleteTaskAsync(string? taskId)
+        {
+            var task = await context.FindAsync<Models.Task>(taskId);
+
+            if (task == null)
+            {
+                throw new InvalidOperationException("Can not move task into Completed state. Task with given ID was not found.");
             }
 
             task.IsCompleted = true;
             await context.SaveChangesAsync();
-
-            return new ServiceResult(true);
         }
 
-        public async Task<IServiceResult> ToDoTaskAsync(string? taskId)
+        public async Task ToDoTaskAsync(string? taskId)
         {
             var task = await context.FindAsync<Models.Task>(taskId);
 
             if (task == null)
             {
-                return new ServiceResult(false);
+                throw new InvalidOperationException("Can not move task into ToDo state. Task with given ID was not found.");
             }
 
             task.IsCompleted = false;
             await context.SaveChangesAsync();
-
-            return new ServiceResult(true);
         }
 
-        public async Task<IServiceResult<Models.Task>> SaveTaskAsync(string? taskId, Models.Task task)
+        public async Task<string> AddOrUpdateTaskAsync(Models.Task task)
         {
-            var existingTask = await context.FindAsync<Models.Task>(taskId);
-
-            if (existingTask == null)
-            {
-                await SaveNewTaskAsync(task);
-            }
-            else
-            {
-                await UpdateExistingTaskAsync(existingTask, task);
-            }
-
-            return new ServiceResult<Models.Task>(true, task);
+            var entry = await context.AddOrUpdateAsync(task);
+            await context.SaveChangesAsync();
+            return entry.Entity.Id!;
         }
 
-        public async Task<IServiceResult> DeleteTaskAsync(string? taskId)
+        public async Task DeleteTaskAsync(string? taskId)
         {
             var task = await context.FindAsync<Models.Task>(taskId);
 
             if (task == null)
             {
-                return new ServiceResult(false);
+                throw new InvalidOperationException("Can not delete task. Task with given ID was not found.");
             }
 
             context.Tasks.Remove(task);
-            await context.SaveChangesAsync();
-
-            return new ServiceResult(true);
-        }
-
-        private async Task SaveNewTaskAsync(Models.Task task)
-        {
-            var newTask = new Models.Task
-            {
-                Id = Guid.NewGuid().ToString(),
-                Name = task.Name,
-                Description = task.Description,
-                DueDate = task.DueDate,
-            };
-
-            context.Add(newTask);
-            await context.SaveChangesAsync();
-        }
-
-        private async Task UpdateExistingTaskAsync(Models.Task existingTask, Models.Task task)
-        {
-            existingTask.Name = task.Name;
-            existingTask.Description = task.Description;
-            existingTask.DueDate = task.DueDate;
             await context.SaveChangesAsync();
         }
     }

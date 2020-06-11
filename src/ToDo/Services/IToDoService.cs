@@ -1,21 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using ToDo.Services.Results;
 
 namespace ToDo.Services
 {
     public interface IToDoService
     {
-        Task<IServiceResult> CompleteTaskAsync(string? taskId);
+        Task CompleteTaskAsync(string? taskId);
 
-        Task<IServiceResult> DeleteTaskAsync(string? taskId);
+        Task DeleteTaskAsync(string? taskId);
 
-        Task<IServiceResult<IEnumerable<Models.Task>>> GetSortedTasksAsync();
+        Task<IEnumerable<Models.Task>> GetSortedTasksAsync();
 
-        Task<IServiceResult<Models.Task>> GetTaskAsync(string? taskId);
+        Task<Models.Task> GetTaskAsync(string? taskId);
 
-        Task<IServiceResult<Models.Task>> SaveTaskAsync(string? taskId, Models.Task value);
+        Task<string> AddOrUpdateTaskAsync(Models.Task value);
 
-        Task<IServiceResult> ToDoTaskAsync(string? taskId);
+        Task ToDoTaskAsync(string? taskId);
     }
 }

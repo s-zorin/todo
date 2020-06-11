@@ -12,7 +12,7 @@
     <script data-main="views/tasks/edit" src="~/requirejs/require.js"></script>
 }
 
-<form id="task-edit-form" asp-action="SubmitEdits" asp-route-id="@Model.Task.Id" method="post">
+<form id="task-edit-form" asp-action="SubmitEdit" method="post">
     <div class="group">
         <label>Name</label>
         <input asp-for="Task.Name" type="text" />
@@ -25,4 +25,6 @@
         <label>Due date</label>
         <input asp-for="Task.DueDate" type="date" />
     </div>
+
+    <input style="display:none" asp-for="Task.Id" type="text" value="@Model.Task.Id" />
 </form>

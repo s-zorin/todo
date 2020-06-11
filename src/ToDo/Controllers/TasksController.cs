@@ -16,16 +16,11 @@ namespace ToDo.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var result = await toDoService.GetSortedTasksAsync();
-
-            if (!result.IsOk)
-            {
-                return BadRequest();
-            }
+            var sortedTasks = await toDoService.GetSortedTasksAsync();
 
             var viewModel = new ViewModels.Tasks.Index
             {
-                Tasks = result.Value
+                Tasks = sortedTasks,
             };
 
             return View(viewModel);
@@ -33,16 +28,11 @@ namespace ToDo.Controllers
 
         public async Task<IActionResult> Single(string? id)
         {
-            var result = await toDoService.GetTaskAsync(id);
-
-            if (!result.IsOk)
-            {
-                return BadRequest();
-            }
+            var task = await toDoService.GetTaskAsync(id);
 
             var viewModel = new ViewModels.Tasks.Single
             {
-                Task = result.Value,
+                Task = task,
             };
 
             return View(viewModel);
@@ -50,12 +40,7 @@ namespace ToDo.Controllers
 
         public async Task<IActionResult> Complete(string? id)
         {
-            var result = await toDoService.CompleteTaskAsync(id);
-
-            if (!result.IsOk)
-            {
-                return BadRequest();
-            }
+            await toDoService.CompleteTaskAsync(id);
             
             var referer = Request.Headers["Referer"];
 
@@ -69,23 +54,18 @@ namespace ToDo.Controllers
 
         public async Task<IActionResult> Edit(string? id)
         {
-            var result = await toDoService.GetTaskAsync(id);
-
-            if (!result.IsOk)
-            {
-                return BadRequest();
-            }
+            var task = await toDoService.GetTaskAsync(id);
 
             var viewModel = new ViewModels.Tasks.Edit
             {
-                Task = result.Value,
+                Task = task,
             };
 
             return View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> SubmitEdits(string? id, [Bind("Name", "Description", "DueDate", Prefix = "Task")] Models.Task submittedTask)
+        public async Task<IActionResult> SubmitEdit([Bind("Id", "Name", "Description", "DueDate", Prefix = "Task")] Models.Task submittedTask)
         {
             if (!ModelState.IsValid)
             {
@@ -97,20 +77,16 @@ namespace ToDo.Controllers
                 return View("Edit", viewModel);
             }
 
-            var result = await toDoService.SaveTaskAsync(id, submittedTask);
+            var id = await toDoService.AddOrUpdateTaskAsync(submittedTask);
 
-            if (!result.IsOk)
-            {
-                return BadRequest();
-            }
-
-            return RedirectToAction("Single", "Tasks", new { result.Value.Id });
+            return RedirectToAction("Single", "Tasks", new { id });
         }
 
         public IActionResult Create()
         {
             var task = new Models.Task
             {
+                Id = null,
                 Name = "New Task",
                 Description = null,
                 DueDate = DateTimeOffset.Now.Date,
@@ -126,12 +102,7 @@ namespace ToDo.Controllers
 
         public async Task<IActionResult> ToDo(string? id)
         {
-            var result = await toDoService.ToDoTaskAsync(id);
-
-            if (!result.IsOk)
-            {
-                return BadRequest();
-            }
+            await toDoService.ToDoTaskAsync(id);
 
             return RedirectToAction("Edit", "Tasks", new { id });
         }
@@ -139,12 +110,7 @@ namespace ToDo.Controllers
         [HttpPost]
         public async Task<IActionResult> SubmitDelete(string? id)
         {
-            var result = await toDoService.DeleteTaskAsync(id);
-
-            if (!result.IsOk)
-            {
-                return BadRequest();
-            }
+            await toDoService.DeleteTaskAsync(id);
 
             return RedirectToAction("Index", "Tasks");
         }
